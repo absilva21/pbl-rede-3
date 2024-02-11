@@ -42,9 +42,17 @@ public class Receiver extends Thread {
 			
 				String payload = new String(receivePacket.getData());
 				
-				Application.main.unpacker.payloadsDtg.add(payload);
+				System.out.println("recebi: \n");
 				
+				String[] params = payload.split(" ");
 				
+				if(params[1].equals("send")) {
+				//	Mensagem m = new  Mensagem();
+				}
+				
+				for(int i = 0;i<params.length;i++) {
+					System.out.println("\n"+params[i]);
+				}
 
 			}
 			
