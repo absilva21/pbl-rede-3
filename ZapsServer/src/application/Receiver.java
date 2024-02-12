@@ -39,8 +39,8 @@ public class Receiver extends Thread {
 						receiveData.length);
 				
 				serverSocket.receive(receivePacket);
-				
-				String payload = new String(receivePacket.getData());
+				String data = new String(receivePacket.getData());
+				String payload = data.replace("\\u0000", "");
 				
 				System.out.println("recebi: \n");
 				System.out.println(payload+"\n");
@@ -51,14 +51,14 @@ public class Receiver extends Thread {
 					Cliente c = new Cliente(Application.main.localhost,params[1]);
 					Mensagem m = new  Mensagem(params[2],new int [1],c);
 					Application.main.grupo.send(m);
-				}else if(params[0].equals("input")) {
+				}else if(params.length==1&&params[0].startsWith("input")) {
 					String inputs = "		LARSID\n";
 					Iterator<Mensagem> i = Application.main.grupo.getMensagens().iterator();
 					
 					while(i.hasNext()) {
 						Mensagem m = i.next();
 						inputs += m.getSource().getNome()+":\n"
-						+"		"+m.getBody()
+						+"								"+m.getBody()
 						+"\n";	
 					}
 					

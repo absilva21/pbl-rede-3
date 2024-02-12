@@ -36,7 +36,7 @@ public class Main extends Thread {
 		
 		Cliente c1 = new Cliente("192.168.0.108","");
 		
-		grupo = new Grupo("Larsid","192.168.0.107");
+		grupo = new Grupo("Larsid","192.168.0.105");
 		grupo.addClient(c1);
 	
 		
