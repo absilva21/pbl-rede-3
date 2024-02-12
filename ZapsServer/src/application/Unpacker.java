@@ -65,7 +65,7 @@ public class Unpacker extends Thread {
 						
 						switch(tipoComInt) {
 							case 1:
-								JSONObject grupoJson = (JSONObject) json.get("body");
+								/*JSONObject grupoJson = (JSONObject) json.get("body");
 								String nomeGrupo = (String) grupoJson.get("nome");
 								String admGrupo = (String) grupoJson.get("adm");
 								Grupo novoGrupo = new Grupo(nomeGrupo,admGrupo);
@@ -114,11 +114,11 @@ public class Unpacker extends Thread {
 									Application.main.grupos.add(novoGrupo);
 								}finally {
 									lock2.unlock();
-								}
+								}*/
 								break;
 								
 							case 2:
-								JSONObject jsonBody2 = (JSONObject) json.get("body");
+								/*JSONObject jsonBody2 = (JSONObject) json.get("body");
 								String addr = (String) jsonBody2.get("addr");
 								String nome = (String) jsonBody2.get("nome");
 								String grupo = (String) jsonBody2.get("grupo");
@@ -132,11 +132,11 @@ public class Unpacker extends Thread {
 									if(g.getNome().equals(grupo)) {
 										g.addClient(c);
 									}
-								}
+								}*/
 								break;
 								
 							case 3:
-								Iterator<Grupo> i = Application.main.grupos.iterator();
+								/*Iterator<Grupo> i = Application.main.grupos.iterator();
 								String nomeGrupo2 = (String) json.get("grupo");
 								String destino = (String) json.get("source");
 								while(i.hasNext()) {
@@ -165,11 +165,11 @@ public class Unpacker extends Thread {
 										serverSocket.close();
 										
 									}
-								}
+								}*/
 								break;
 								
 							case 4:
-								String nomeGrupo3 = (String) json.get("grupo");
+								/*String nomeGrupo3 = (String) json.get("grupo");
 								String origem = (String) json.get("source");
 								JSONArray faltas = (JSONArray) json.get("faltas");
 								int[] idFaltas = new int[faltas.size()];
@@ -203,7 +203,7 @@ public class Unpacker extends Thread {
 										Delivery d = new Delivery(cli.iterator(),grupof,m,7080);
 										d.start();
 									}
-								}
+								}*/
 								
 								break;
 						}
@@ -213,6 +213,7 @@ public class Unpacker extends Thread {
 					if(tipo.equals("men")) {
 						String mensagem = json.get("body").toString();
 						String origem = json.get("origem").toString();
+						String nomeorigem = json.get("nomeOrigem").toString();
 						String destino = json.get("grupo").toString();
 						JSONArray tempoJson = (JSONArray) json.get("tempo");
 						Long idLocal = (Long) json.get("idm");
@@ -222,9 +223,12 @@ public class Unpacker extends Thread {
 							int valor = Integer.parseInt( (String) tempoJson.get(i));
 							tempo[i] = valor;
 						}
-						Grupo grupoDestino = grupoExiste(destino);
-						Grupo viewGroup = null;
-						if(!origem.equals(Application.main.localhost)) {
+						/*Grupo grupoDestino = grupoExiste(destino);
+						Grupo viewGroup = null;*/
+						Mensagem nova = new Mensagem(mensagem,tempo,Application.main.grupo.searchClient(origem));
+						nova.setIdLocal(idLocalValue);
+						Application.main.grupo.receive(nova);
+						/*if(!origem.equals(Application.main.localhost)) {
 							if(grupoDestino!=null) {
 								
 								boolean participante = grupoDestino.isPart(origem);
@@ -291,7 +295,7 @@ public class Unpacker extends Thread {
 									}
 								}
 							}
-						}
+						}*/
 						
 					}
 					
@@ -299,20 +303,12 @@ public class Unpacker extends Thread {
 				}catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				} catch (SocketException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnknownHostException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				} 
 			}
 		}
 	}
 	
+	/*
 	public Grupo grupoExiste(String grupo) {
 			
 			Grupo result = null;
@@ -329,7 +325,7 @@ public class Unpacker extends Thread {
 		
 			return result;
 			
-		}
+		}*/
 	
 
 }

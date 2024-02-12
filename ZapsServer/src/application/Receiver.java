@@ -46,8 +46,11 @@ public class Receiver extends Thread {
 				
 				String[] params = payload.split(" ");
 				
-				if(params[1].equals("send")) {
-				//	Mensagem m = new  Mensagem();
+				if(params[0].equals("send")) {
+					Cliente c = new Cliente(Application.main.localhost,params[1]);
+					Mensagem m = new  Mensagem(params[2],new int [1],c);
+				}else if(params[0].equals("input")) {
+					
 				}
 				
 				for(int i = 0;i<params.length;i++) {
