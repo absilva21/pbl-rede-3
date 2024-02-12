@@ -46,10 +46,12 @@ public class Unpacker extends Thread {
 			
 			
 			if(payload!=null) {
-				System.out.println(payload);
-				int fimJson = payload.lastIndexOf('}')+1;
-				String jsonBody = payload.substring(0, fimJson);	
-				
+				/*String data = payload.substring(0,payload.lastIndexOf("/u0000"));
+				System.out.println(data);
+				int fimJson = data.lastIndexOf('}')+1;
+				System.out.println(fimJson);*/
+				String jsonBody = payload.replace("\\u0000", "") + "\"}";	
+				System.out.println(jsonBody);
 				JSONParser parser = new JSONParser(); 
 				
 				try {
@@ -227,7 +229,10 @@ public class Unpacker extends Thread {
 						Grupo viewGroup = null;*/
 						Mensagem nova = new Mensagem(mensagem,tempo,Application.main.grupo.searchClient(origem));
 						nova.setIdLocal(idLocalValue);
-						Application.main.grupo.receive(nova);
+						if(!origem.equals(Application.main.localhost)) {
+							Application.main.grupo.receive(nova);
+						}
+						
 						/*if(!origem.equals(Application.main.localhost)) {
 							if(grupoDestino!=null) {
 								

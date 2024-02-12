@@ -34,29 +34,44 @@ public class Receiver extends Thread {
 			serverSocket = new DatagramSocket(porta);
 			
 			while(true) {
-				byte[] receiveData = new byte[2048];
+				byte[] receiveData = new byte[4096];
 				DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
 				
 				serverSocket.receive(receivePacket);
-			
+				
 				String payload = new String(receivePacket.getData());
 				
 				System.out.println("recebi: \n");
+				System.out.println(payload+"\n");
 				
 				String[] params = payload.split(" ");
 				
 				if(params[0].equals("send")) {
 					Cliente c = new Cliente(Application.main.localhost,params[1]);
 					Mensagem m = new  Mensagem(params[2],new int [1],c);
+					Application.main.grupo.send(m);
 				}else if(params[0].equals("input")) {
+					String inputs = "		LARSID\n";
+					Iterator<Mensagem> i = Application.main.grupo.getMensagens().iterator();
 					
+					while(i.hasNext()) {
+						Mensagem m = i.next();
+						inputs += m.getSource().getNome()+":\n"
+						+"		"+m.getBody()
+						+"\n";	
+					}
+					
+					byte[] sendData = new byte[4096];
+					sendData = inputs.getBytes();
+					InetAddress destiny = InetAddress.getLoopbackAddress();
+					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,destiny,9000);
+					serverSocket.send(sendPacket);
+				}else {
+					System.out.println("Não entendi o comando");
 				}
 				
-				for(int i = 0;i<params.length;i++) {
-					System.out.println("\n"+params[i]);
-				}
-
+			
 			}
 			
 		} catch (IOException e) {

@@ -237,8 +237,10 @@ import application.MensagemComparator;
 		JSONm.put("tempo", relogioJson);
 		JSONm.put("id", m.getSource().getId());
 		JSONm.put("idm",m.getIdLocal());
+		
 		String payload = JSONm.toJSONString();
-		byte[] buffer = new byte[2048];
+		
+		byte[] buffer = new byte[payload.length()]; 
 		buffer = payload.getBytes(StandardCharsets.UTF_8);
 		InetSocketAddress group = new InetSocketAddress(this.addr, 6789);
 		DatagramPacket sendPacket = new DatagramPacket(buffer,buffer.length,group);
