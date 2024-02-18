@@ -30,16 +30,18 @@ public class Main extends Thread {
 	    unpacker.start();
 		receptor = new Receiver();
 		receptor.start();
-		/*Cliente c1 = new Cliente("172.16.103.11","");
+		Cliente c1 = new Cliente("172.16.103.11","");
 		Cliente c2 = new Cliente("172.16.103.13","");
-		grupo = new Grupo("Larsid","172.16.103.12");*/
+		Cliente c3 = new Cliente("172.16.103.14","");
+		grupo = new Grupo("Larsid","172.16.103.12");
 		
-		Cliente c1 = new Cliente("192.168.0.108","");
-		
-		grupo = new Grupo("Larsid","192.168.0.105");
+		/*Cliente c1 = new Cliente("192.168.0.106","");
+		Cliente c2 = new Cliente("192.168.0.108","");
+		Cliente c3 = new Cliente("192.168.0.107","");
+		grupo = new Grupo("Larsid","192.168.0.109");*/
 		grupo.addClient(c1);
-	
-		
+		grupo.addClient(c2);
+		grupo.addClient(c3);
 		System.out.println("Serviço em execução...");
 		
 	}

@@ -24,6 +24,9 @@ public class MensagemComparator implements Comparator<Mensagem> {
             
         }
         
+        if(Integer.compare(msg1.getSource().getId(), msg2.getSource().getId())==0) {
+        	return 1;
+        }
         // Se todos os componentes forem iguais, comparar pela origem da mensagem
         return Integer.compare(msg1.getSource().getId(), msg2.getSource().getId());
 

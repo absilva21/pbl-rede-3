@@ -9,6 +9,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -201,15 +204,48 @@ import application.MensagemComparator;
 	
 	public void receive(Mensagem m) {
 		Cliente c = this.searchClient(Application.main.localhost);
+		Cliente cOrigem = this.searchClient(m.getSource().getAddr());
 		for(int i=0;i<this.relogio.length;i++) {
+			if(i!=c.getId()) {
+				this.relogio[i] = m.getTime()[i];
+			}
 			
-			this.relogio[i] = m.getTime()[i];
 			
 		}
 		
-		this.relogio[c.getId()]++;
+		this.relogio[c.getId()] = Math.max(this.relogio[c.getId()], this.relogio[cOrigem.getId()]) + 1;
 		
 		this.mensagens.add(m);
+		
+		this.ordenarMensagens();
+		ReadWriteLock  readWriteLock = new ReentrantReadWriteLock();
+		Lock lock = readWriteLock.writeLock();
+		try {
+			lock.lock();
+			JSONObject JSONm = new JSONObject();
+			JSONm.put("type", "com");
+			JSONm.put("comNumber", 1);
+			JSONm.put("index", c.getId());
+			JSONm.put("valor",this.relogio[c.getId()]);
+			JSONm.put("origem", Application.main.localhost);
+			
+			String payload = JSONm.toJSONString();
+			
+			byte[] buffer = new byte[payload.length()]; 
+			buffer = payload.getBytes(StandardCharsets.UTF_8);
+			InetSocketAddress group = new InetSocketAddress(this.addr, 6789);
+			DatagramPacket sendPacket = new DatagramPacket(buffer,buffer.length,group);
+			try {
+				this.multicast.getSocket().send(sendPacket);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}finally{
+			lock.unlock();
+		}
+
 		
 	}
 	
@@ -218,7 +254,7 @@ import application.MensagemComparator;
 		this.idIndex++;
 		m.setIdLocal(this.idIndex);
 		int index = localHost.getId();
-		this.relogio[index]++;
+	    this.relogio[index]++;
 		m.setTime(this.relogio);
 		this.mensagens.add(m);
 		
@@ -238,7 +274,9 @@ import application.MensagemComparator;
 		JSONm.put("id", m.getSource().getId());
 		JSONm.put("idm",m.getIdLocal());
 		
-		String payload = JSONm.toJSONString();
+		String json = JSONm.toJSONString();
+		
+		String payload = json.replace("\\u0000", "");
 		
 		byte[] buffer = new byte[payload.length()]; 
 		buffer = payload.getBytes(StandardCharsets.UTF_8);
@@ -285,6 +323,17 @@ import application.MensagemComparator;
 	
 	public void ordenarMensagens() {
 		 Collections.sort(this.mensagens, new MensagemComparator());
+	}
+	
+	public void syncClock(int index, int value) {
+		ReadWriteLock  readWriteLock = new ReentrantReadWriteLock();
+		Lock lock = readWriteLock.writeLock();
+		try {
+			lock.lock();
+			this.relogio[index] = value;
+		}finally {
+			lock.unlock();
+		}
 	}
 	
 	public String getAddr() {

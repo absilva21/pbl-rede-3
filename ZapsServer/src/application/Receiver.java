@@ -58,7 +58,7 @@ public class Receiver extends Thread {
 					while(i.hasNext()) {
 						Mensagem m = i.next();
 						inputs += m.getSource().getNome()+":\n"
-						+"								"+m.getBody()
+						+"	 "+m.getBody()
 						+"\n";	
 					}
 					
