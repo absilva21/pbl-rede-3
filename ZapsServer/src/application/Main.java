@@ -8,6 +8,7 @@ import dados.Grupo;
 
 public class Main extends Thread {
 	public  Unpacker unpacker;
+	public  NackRes  nackRes;
 	public  String localhost;
 	public  Receiver receptor;
 	public  Grupo grupo;
@@ -28,6 +29,8 @@ public class Main extends Thread {
 		
 		unpacker = new Unpacker();
 	    unpacker.start();
+	    nackRes = new NackRes(unpacker);
+	    nackRes.start();
 		receptor = new Receiver();
 		receptor.start();
 		Cliente c1 = new Cliente("172.16.103.11","");

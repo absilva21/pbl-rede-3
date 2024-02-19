@@ -73,8 +73,10 @@ public class SyncM extends Thread {
 			JSONObject JSONack = new JSONObject();
 			int idNack = this.g.getIdIndex() + 1;
 			this.g.setNackID(idNack);
+	
 			JSONack.put("type", "com");
 			JSONack.put("comNumber", 2);
+			JSONack.put("origem", Application.main.localhost);
 			JSONack.put("nackID", idNack);
 			
 			Iterator<int[]> it2 = allFouls.iterator();

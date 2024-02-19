@@ -1,6 +1,7 @@
 package application;
 
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -82,36 +83,18 @@ public class Unpacker extends Thread {
 									break;
 									
 								case 3:
-									/*Iterator<Grupo> i = Application.main.grupos.iterator();
-									String nomeGrupo2 = (String) json.get("grupo");
-									String destino = (String) json.get("source");
-									while(i.hasNext()) {
-										Grupo g = (Grupo) i.next();
-										if(g.getNome().equals(nomeGrupo2)) {
-											int id = 0;
-											ReadWriteLock  readWriteLock3 = new ReentrantReadWriteLock();
-											Lock lock3 = readWriteLock3.writeLock();
-											try {
-												lock3.lock();
-												id = g.getIdIndex();
-											}finally {
-												lock3.unlock();
-											}
-											
-											JSONObject jsonResposta = new JSONObject();
-											jsonResposta.put("id", id);
-											String jsonString = jsonResposta.toJSONString();
-											DatagramSocket serverSocket;
-											serverSocket = new DatagramSocket(7050);
-											byte[] buffer = new byte[1024];
-											buffer = jsonString.getBytes(StandardCharsets.UTF_8);
-											InetAddress destiny = InetAddress.getByName(destino);
-											DatagramPacket sendPacket = new DatagramPacket(buffer,buffer.length,destiny,7030);
-											serverSocket.send(sendPacket);
-											serverSocket.close();
-											
-										}
-									}*/
+									Long nodeId = (Long) json.get("nodeID");
+									Long nackID = (Long) json.get("nackId");
+									JSONArray mensa = (JSONArray) json.get("mens");
+									boolean forMe = isLocalHost(nodeId.intValue());
+									
+									if(forMe) {
+										
+									}else {
+										
+									}
+									
+									
 									break;
 									
 								case 4:
@@ -260,24 +243,26 @@ public class Unpacker extends Thread {
 		}
 	}
 	
-	/*
-	public Grupo grupoExiste(String grupo) {
-			
-			Grupo result = null;
-			Iterator<Grupo> it = Application.main.grupos.iterator();
-			
-			while(it.hasNext()) {
-				Grupo g = (Grupo) it.next();
-				if(g.getNome().equals(grupo)) {
-					result = g;
-					break;
-				}
-			}
-			
+	public boolean isLocalHost(int id) {
+		boolean result = false;
+		String localhost = Application.main.localhost;
+		Cliente c  = Application.main.grupo.searchClient(localhost);
 		
-			return result;
-			
-		}*/
+		if(!c.equals(null)&&c.getId()==id) {
+			result = true;
+		}
+		
+		return result;
+	}
 	
+	public Nack searchNack(int idN,int id) {
+		Nack n = null;
+		
+		Iterator<Nack> it = nacks.iterator();
+		
+		
+		
+		return n;
+	}
 
 }
