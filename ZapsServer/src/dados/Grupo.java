@@ -20,6 +20,7 @@ import java.util.Collections;
 import application.Application;
 import application.GrupoCast;
 import application.MensagemComparator;
+import application.SyncM;
 //import application.SyncM;
 	
 	public class Grupo {
@@ -27,9 +28,8 @@ import application.MensagemComparator;
 	private String adm;
 	private int[] relogio;
 	private int idIndex;
+	private int nackID;
 	private GrupoCast multicast;
-	//private SyncM syncM;
-	
 	private String addr;
 	private LinkedList<Mensagem> mensagens;
 	private LinkedList<Cliente> clientes;
@@ -83,14 +83,6 @@ import application.MensagemComparator;
 	public void setIdIndex(int idIndex) {
 		this.idIndex = idIndex;
 	}
-	
-	/*public SyncM getSyncM() {
-		return syncM;
-	}
-
-	public void setSyncM(SyncM syncM) {
-		this.syncM = syncM;
-	}*/
 	
 	
 	
@@ -173,8 +165,8 @@ import application.MensagemComparator;
 		return result;
 	}
 	
-	public LinkedList<Mensagem> getFouls(int[] f){
-		LinkedList<Mensagem> result = new LinkedList<Mensagem>();
+	public LinkedList<Mensagem> getFouls(int[] f,LinkedList<Mensagem> r ){
+		LinkedList<Mensagem> result = r;
 		for(int i = 0;i<f.length;i++) {
 			Mensagem m = this.getMensage(f[i]);
 			if(!m.equals(null)) {
@@ -245,6 +237,8 @@ import application.MensagemComparator;
 		}finally{
 			lock.unlock();
 		}
+		
+		
 
 		
 	}
@@ -356,8 +350,16 @@ import application.MensagemComparator;
 		this.addr = "228.5.6.7";
 		this.multicast = new GrupoCast(this);
 		this.multicast.start();
-		/*this.syncM = new SyncM(this);
-		this.syncM.start();*/
+		this.nackID = 0;
+		
+	}
+
+	public int getNackID() {
+		return nackID;
+	}
+
+	public void setNackID(int nackID) {
+		this.nackID = nackID;
 	}
 
 }

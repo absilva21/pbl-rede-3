@@ -13,15 +13,16 @@ import org.json.simple.parser.ParseException;
 
 import dados.Cliente;
 import dados.Mensagem;
+import dados.Nack;
 // uma fila é usada para desempacotar o pacote 
 public class Unpacker extends Thread {
 	
 	public LinkedList<String> payloadsDtg;
-	public LinkedList<JSONObject> nacks; 
+	public LinkedList<Nack> nacks; 
 
 	public Unpacker() {
 		this.payloadsDtg = new LinkedList<String>();
-		this.nacks = new LinkedList<JSONObject>();
+		this.nacks = new LinkedList<Nack>();
 	}
 	
 	@Override
@@ -66,7 +67,18 @@ public class Unpacker extends Thread {
 									
 									
 								case 2:
-									
+									JSONArray faltas =  (JSONArray) json.get("fouls");
+									Long NackId = (Long) json.get("nackID");
+									int NackIdInt = NackId.intValue();
+									Long origemID = (Long) json.get("origem");
+									int origemIDInt = origemID.intValue();
+									LinkedList<int[]> fouls = new LinkedList<int[]>();
+									for(int i = 0;i<faltas.size();i++) {
+										int[] falta = (int[]) faltas.get(i);
+										fouls.add(falta);
+									}
+									Nack nack = new Nack(origemIDInt,NackIdInt,fouls,false);
+									nacks.add(nack);
 									break;
 									
 								case 3:
