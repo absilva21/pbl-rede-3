@@ -42,7 +42,7 @@ public class NackRes extends Thread {
 				lock.lock();
 				
 				Nack n = this.unpacker.nacks.pollFirst();
-				if(!n.equals(null)) {
+				if(n!=null) {
 					if(!n.isResposta()) {
 						LinkedList<Mensagem> fouls = new LinkedList<Mensagem>();
 						Iterator<int[]> i = n.getFouls().iterator();
