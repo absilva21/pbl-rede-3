@@ -71,11 +71,16 @@ public class Unpacker extends Thread {
 									JSONArray faltas =  (JSONArray) json.get("fouls");
 									Long NackId = (Long) json.get("nackID");
 									int NackIdInt = NackId.intValue();
-									Long origemID = (Long) json.get("origem");
+									Long origemID = (Long) json.get("origemID");
 									int origemIDInt = origemID.intValue();
 									LinkedList<int[]> fouls = new LinkedList<int[]>();
 									for(int i = 0;i<faltas.size();i++) {
-										int[] falta = (int[]) faltas.get(i);
+										JSONArray f = (JSONArray) faltas.get(i);
+										int[] falta = new int[f.size()];
+										for(int j = 0;j<f.size();j++) {
+											Long valorLong = (Long) f.get(j);
+											falta[j] =  valorLong.intValue();
+										}
 										fouls.add(falta);
 									}
 									Nack nack = new Nack(origemIDInt,NackIdInt,fouls,false);

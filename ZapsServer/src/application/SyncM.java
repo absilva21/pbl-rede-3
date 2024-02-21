@@ -65,9 +65,9 @@ public class SyncM extends Thread {
 					allFouls.add(fouls);
 				}else {
 					if(men.getIdLocal()>1) {
-						fouls = new int[men.getIdLocal()-2];
+						fouls = new int[men.getIdLocal()-1];
 						int index = -1;
-						for(int i = men.getIdLocal() + 1;i<men.getIdLocal();i++){
+						for(int i = 1;i<men.getIdLocal();i++){
 							fouls[index+1] = i;
 						}
 						allFouls.add(fouls);
@@ -75,10 +75,10 @@ public class SyncM extends Thread {
 				}
 			}else if(this.clienteMens.size()==1) {
 				if(men.getIdLocal()>1) {
-					fouls = new int[men.getIdLocal()-2];
+					fouls = new int[men.getIdLocal()-1];
 					int index = -1;
-					for(int i = men.getIdLocal() + 1;i<men.getIdLocal();i++){
-						fouls[index+1] = i;
+					for(int j = 1;j<men.getIdLocal();j++){
+						fouls[index+1] = j;
 					}
 					allFouls.add(fouls);
 				}
@@ -114,7 +114,7 @@ public class SyncM extends Thread {
 			JSONack.put("fouls", allFoulsArray);
 			Cliente localHost = this.g.searchClient(Application.main.localhost);
 			int index = localHost.getId();
-			JSONack.put("origem",index);
+			JSONack.put("origemID",index);
 			String json = JSONack.toJSONString();
 			String payload = json.replace("\\u0000", "");
 			byte[] buffer = new byte[payload.length()]; 
