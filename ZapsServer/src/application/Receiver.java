@@ -49,7 +49,11 @@ public class Receiver extends Thread {
 				
 				if(params[0].equals("send")) {
 					Cliente c = new Cliente(Application.main.localhost,params[1]);
-					Mensagem m = new  Mensagem(params[2],new int [1],c);
+					String body = "";
+					for(int index = 2;index<params.length;index++) {
+						body += params[index];
+					}
+					Mensagem m = new  Mensagem(body,new int [1],c);
 					Application.main.grupo.send(m);
 				}else if(params.length==1&&params[0].startsWith("input")) {
 					String inputs = "		LARSID\n";
@@ -62,10 +66,12 @@ public class Receiver extends Thread {
 						+"\n";	
 					}
 					
-					byte[] sendData = new byte[4096];
+					byte[] sendData = new byte[64000];
 					sendData = inputs.getBytes();
+					
 					InetAddress destiny = InetAddress.getLoopbackAddress();
 					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,destiny,9000);
+			
 					serverSocket.send(sendPacket);
 				}else {
 					System.out.println("Não entendi o comando");

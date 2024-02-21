@@ -35,7 +35,7 @@ public class Main extends Thread {
 		receptor.start();
 		Cliente c1 = new Cliente("172.16.103.11","");
 		Cliente c2 = new Cliente("172.16.103.13","");
-		Cliente c3 = new Cliente("172.16.103.14","");
+		Cliente c3 = new Cliente("172.16.103.242","");
 		grupo = new Grupo("Larsid","172.16.103.12");
 		
 		/*Cliente c1 = new Cliente("192.168.0.106","");

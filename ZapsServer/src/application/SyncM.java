@@ -38,9 +38,10 @@ public class SyncM extends Thread {
 		this.g = grupo;
 	}
 
-	public SyncM(LinkedList<Mensagem> ms){
+	public SyncM(LinkedList<Mensagem> ms, Grupo grupo){
 		// TODO Auto-generated constructor stub
 		this.clienteMens = ms;
+		this.g = grupo;
 		
 	}
 	
@@ -62,8 +63,28 @@ public class SyncM extends Thread {
 						fouls[index+1] = i;
 					}
 					allFouls.add(fouls);
+				}else {
+					if(men.getIdLocal()>1) {
+						fouls = new int[men.getIdLocal()-2];
+						int index = -1;
+						for(int i = men.getIdLocal() + 1;i<men.getIdLocal();i++){
+							fouls[index+1] = i;
+						}
+						allFouls.add(fouls);
+					}
 				}
-			}else {
+			}else if(this.clienteMens.size()==1) {
+				if(men.getIdLocal()>1) {
+					fouls = new int[men.getIdLocal()-2];
+					int index = -1;
+					for(int i = men.getIdLocal() + 1;i<men.getIdLocal();i++){
+						fouls[index+1] = i;
+					}
+					allFouls.add(fouls);
+				}
+			}
+			else {
+				
 				break;
 			}
 		}
@@ -82,7 +103,12 @@ public class SyncM extends Thread {
 			Iterator<int[]> it2 = allFouls.iterator();
 			
 			while(it2.hasNext()) {
-				allFoulsArray.add(it2.next());
+				JSONArray foulArray = new JSONArray();
+				int[] fouls = it2.next();
+				for(int i = 0;i<fouls.length;i++) {
+					foulArray.add(fouls[i]);
+				}
+				allFoulsArray.add(foulArray);
 			}
 			
 			JSONack.put("fouls", allFoulsArray);

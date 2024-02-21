@@ -160,8 +160,7 @@ public class Unpacker extends Thread {
 							int valor = Integer.parseInt( (String) tempoJson.get(i));
 							tempo[i] = valor;
 						}
-						/*Grupo grupoDestino = grupoExiste(destino);
-						Grupo viewGroup = null;*/
+						
 						Mensagem nova = new Mensagem(mensagem,tempo,new Cliente(origem,nomeorigem));
 						nova.setIdLocal(idLocalValue);
 						if(!origem.equals(Application.main.localhost)) {

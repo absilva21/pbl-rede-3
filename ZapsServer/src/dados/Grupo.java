@@ -21,7 +21,7 @@ import application.Application;
 import application.GrupoCast;
 import application.MensagemComparator;
 import application.SyncM;
-//import application.SyncM;
+
 	
 	public class Grupo {
 	private String nome;
@@ -197,20 +197,18 @@ import application.SyncM;
 	public void receive(Mensagem m) {
 		Cliente c = this.searchClient(Application.main.localhost);
 		Cliente cOrigem = this.searchClient(m.getSource().getAddr());
-		for(int i=0;i<this.relogio.length;i++) {
-			if(i!=c.getId()) {
-				this.relogio[i] = m.getTime()[i];
-			}
-			
-			
-		}
 		
-		this.relogio[c.getId()] = Math.max(this.relogio[c.getId()], this.relogio[cOrigem.getId()]) + 1;
-		
+		this.relogio[cOrigem.getId()] = m.getTime()[cOrigem.getId()];
+		this.relogio[c.getId()]++;
 		this.mensagens.add(m);
 		
 		this.ordenarMensagens();
-		ReadWriteLock  readWriteLock = new ReentrantReadWriteLock();
+		
+		SyncM syncM = new SyncM(this.mensagens,this);
+		
+		syncM.start();
+		
+		/*ReadWriteLock  readWriteLock = new ReentrantReadWriteLock();
 		Lock lock = readWriteLock.writeLock();
 		try {
 			lock.lock();
@@ -237,7 +235,7 @@ import application.SyncM;
 		}finally{
 			lock.unlock();
 		}
-		
+		*/
 		
 
 		
