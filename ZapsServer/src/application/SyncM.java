@@ -60,7 +60,8 @@ public class SyncM extends Thread {
 					fouls = new int[difId-1];
 					int index = -1;
 					for(int i = men.getIdLocal() + 1;i<men2.getIdLocal();i++){
-						fouls[index+1] = i;
+						index++;
+						fouls[index] = i;
 					}
 					allFouls.add(fouls);
 				}else {
@@ -68,7 +69,8 @@ public class SyncM extends Thread {
 						fouls = new int[men.getIdLocal()-1];
 						int index = -1;
 						for(int i = 1;i<men.getIdLocal();i++){
-							fouls[index+1] = i;
+							index++;
+							fouls[index] = i;
 						}
 						allFouls.add(fouls);
 					}
@@ -78,7 +80,8 @@ public class SyncM extends Thread {
 					fouls = new int[men.getIdLocal()-1];
 					int index = -1;
 					for(int j = 1;j<men.getIdLocal();j++){
-						fouls[index+1] = j;
+						index++;
+						fouls[index] = j;
 					}
 					allFouls.add(fouls);
 				}
