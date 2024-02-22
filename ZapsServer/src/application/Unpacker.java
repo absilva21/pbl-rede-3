@@ -41,7 +41,8 @@ public class Unpacker extends Thread {
 			
 			
 			if(payload!=null) {
-				payload = payload.substring(0,payload.indexOf('}')+1);
+				payload = payload.substring(0,payload.lastIndexOf('}')+1);
+			
 				System.out.println(payload);
 				JSONParser parser = new JSONParser(); 
 				
@@ -94,32 +95,32 @@ public class Unpacker extends Thread {
 									boolean forMe = isLocalHost(nodeId.intValue());
 									
 									if(forMe) {
-										mensa = (JSONArray) json.get("mens");
+										
 										ReadWriteLock  readWriteLock2 = new ReentrantReadWriteLock();
 										Lock lock2 = readWriteLock.writeLock();
 										try {
 											lock2.lock();
 											for(int i = 0;i<mensa.size();i++) {
 												JSONObject m = (JSONObject) mensa.get(i);
+												System.out.println("\na mensagem perdida = "+m.toJSONString());
 												String mensagem = m.get("body").toString();
 												String origem2 = m.get("origem").toString();
 												String nomeorigem = m.get("nomeOrigem").toString();
-												JSONArray tempoJson = (JSONArray) json.get("tempo");
+												JSONArray tempoJson = (JSONArray) m.get("time");
 												Long idLocal = (Long) m.get("idm");
 												int idLocalValue = idLocal.intValue(); 
 												int[] tempo = new int[tempoJson.size()];
 												for(int j = 0; j<tempoJson.size();j++) {
-													int valor2 = Integer.parseInt( (String) tempoJson.get(i));
-													tempo[j] = valor2;
+													Long valor2 = (Long)   tempoJson.get(j);
+													tempo[j] = valor2.intValue();
 												}
 												
 												Mensagem nova = new Mensagem(mensagem,tempo,new Cliente(origem,nomeorigem));
 												nova.setIdLocal(idLocalValue);
-												Application.main.grupo.getMensagens().add(nova);
+												Application.main.grupo.receiveFouls(nova);
 												
 											}
-											Application.main.grupo.ordenarMensagens();
-											
+										
 										}finally {
 											lock2.unlock();
 										}

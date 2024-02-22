@@ -67,11 +67,10 @@ public class NackRes extends Thread {
 							JSONArray relogioJson = new JSONArray();
 							int[] relogio = m.getTime();
 							for(int j = 0; j<relogio.length;j++) {
-								String valor = Integer.toString(relogio[j]);
-								relogioJson.add(valor);
+								relogioJson.add(relogio[j]);
 							}
 							
-							JSONm.put("tempo", relogioJson);
+							JSONm.put("time", relogioJson);
 							JSONm.put("id", m.getSource().getId());
 							JSONm.put("idm",m.getIdLocal());
 							
@@ -88,9 +87,11 @@ public class NackRes extends Thread {
 						nackRes.put("mens",faltas);
 						
 						String json = nackRes.toJSONString();
+			
 						
 						String payload = json.replace("\\u0000", "");
-						
+
+
 						byte[] buffer = new byte[payload.length()]; 
 						buffer = payload.getBytes(StandardCharsets.UTF_8);
 						InetSocketAddress group = new InetSocketAddress("228.5.6.7", 6789);

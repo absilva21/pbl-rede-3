@@ -34,7 +34,7 @@ public class Receiver extends Thread {
 			serverSocket = new DatagramSocket(porta);
 			
 			while(true) {
-				byte[] receiveData = new byte[4096];
+				byte[] receiveData = new byte[64000];
 				DatagramPacket receivePacket = new DatagramPacket(receiveData,
 						receiveData.length);
 				

@@ -137,7 +137,7 @@ public class GrupoCast extends Thread {
 		
 		while(true) {
 			
-			byte[] buf = new byte[4096];
+			byte[] buf = new byte[64000];
 			DatagramPacket packet = new DatagramPacket(buf,buf.length);
 			try {
 				this.socket.receive(packet);

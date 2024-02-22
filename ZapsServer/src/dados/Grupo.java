@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-
+import java.util.Comparator;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -192,6 +192,15 @@ import application.SyncM;
 		
 		
 		return result;
+	}
+	
+	public void receiveFouls(Mensagem m) {
+		Cliente c = this.searchClient(Application.main.localhost);
+
+		this.relogio[c.getId()]++;
+		this.mensagens.add(m);
+		
+		this.ordenarMensagens();
 	}
 	
 	public void receive(Mensagem m) {
