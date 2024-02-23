@@ -1,4 +1,4 @@
- # pbl-rede-3
+ # ZAPS ZAPS V2
  
   Aplicativo de troca de mensagens p2p versão 2, foi proposto o aprimoramento do código anterior para uma versão 
 com uma difusão atômica de mensagens e a criação de um serviço de processamento da troca de mensagens, separado do processo do usuário, o projeto foi desenvolvido escrito em **Java** e executando em imagem docker.
