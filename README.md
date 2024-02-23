@@ -91,13 +91,6 @@ Foram utilizados slides do professor Lau Cheuk Lung da Universidade Federal de S
 
 [Comunicação de Grupo: Disfusão Confiável e Atômica ](https://www.inf.ufsc.br/~frank.siqueira/INE5418/Lau/1s-%20ComGrupo.pdf)
 
-## diagrama de classes
-Existem dois pacotes onde as classes estão divididas, **application** onde fica a implementação das threads e
-**dados** onde as entidades que representam objetos do sistema como: grupo, participante(cliente), mensagem e etc.
-
-![zaps](https://github.com/absilva21/pbl-rede-3/assets/83670712/928d5a8e-94eb-407d-811d-fc4283da28ff)
-
-
 ## Ferramentas
 
 * Kit de desenvolvimento Java JDK 17.0.8.7-hotspost
