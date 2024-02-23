@@ -42,5 +42,12 @@ Aqui está o layout de envio de mensagem
 # Detalhes sobre o serviço
  O serviço executa em uma container **Docker**, além de ser o servidor que processa o funcionamento da solução descentralizada, ele serve como uma caixa de mensagens. Para acessa-lo foi criado um script em **Python** que pode enviar mensagens para o servidor via loopback da máquina e também visualizar a caixa de mensagens da mesma forma. 
 
- 
+## Comandos para o script
 
+### Envio 
+
+```
+zaps.py send [nome do usuário] [mensagem]
+```
+**OBS**: sem []
+### Visualizar caixa de mensagens
