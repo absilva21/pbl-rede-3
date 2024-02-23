@@ -48,6 +48,13 @@ Aqui está o layout de envio de mensagem
 # Detalhes sobre o serviço
  O serviço executa em uma container **Docker**, além de ser o servidor que processa o funcionamento da solução descentralizada, ele serve como uma caixa de mensagens. Para acessa-lo foi criado um script em **Python** que pode enviar mensagens para o servidor via loopback da máquina e também visualizar a caixa de mensagens da mesma forma. 
 
+## Uso de threads
+Foi necessário o uso de algumas threads que fazem papeis importantes para o funcionamento do sistema
+
+### Difusão de mensagens
+Existe uma thread responsável pela difusão em multicast das mensagens e também pelo recebimento essa thread é iniciada ao se instânciar um objeto da classe grupo
+
+
 ## Comandos para o script
 
 ### Envio 
