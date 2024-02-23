@@ -66,7 +66,10 @@ A comunicação entre o serviço e o script em **Python** é feita através de u
 
 A detecção é feita por uma thread que analisa as mensagens e busca encontrar falta em uma sequência de mensagens. Ao perceber isso ela envia a solicitação de 
 retransmissão.
+### Desempacotador 
 
+Para que a thread de recebimento de mensagens possa se está apenas recebendo e enviando dados para a rede existe uma thread que converte
+os bytes recebidos em um json e interpreta a informação enviada.
 
 ## Comandos para o script
 
@@ -88,6 +91,12 @@ Foram utilizados slides do professor Lau Cheuk Lung da Universidade Federal de S
 
 [Comunicação de Grupo: Disfusão Confiável e Atômica ](https://www.inf.ufsc.br/~frank.siqueira/INE5418/Lau/1s-%20ComGrupo.pdf)
 
+## diagrama de classes
+Existem dois pacotes onde as classes estão divididas, **application** onde fica a implementação das threads e
+**dados** onde as entidades que representam objetos do sistema como: grupo, participante(cliente), mensagem e etc.
+![zaps](https://github.com/absilva21/pbl-rede-3/assets/83670712/928d5a8e-94eb-407d-811d-fc4283da28ff)
+
+
 ## Ferramentas
 
 * Kit de desenvolvimento Java JDK 17.0.8.7-hotspost
@@ -95,4 +104,6 @@ Foram utilizados slides do professor Lau Cheuk Lung da Universidade Federal de S
 * Visual studio Code
 * Eclipse ide 2021-09
 * Docker
+* biblioteca json-simple-1.1.1
+
 
