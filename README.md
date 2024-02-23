@@ -6,9 +6,15 @@ com uma difusão atômica de mensagens e a criação de um serviço escrito em *
 da implementação de um algoritmo com **Nack**, onde os nós ao perceberem falta de uma sequência de mensagens propagam a todos os nós 
 o pedido de retransmissão, somente um dos nós responde o pedido. O projeto só foi implementado até esse processo, portanto os nós exibem as mensagens mesmo sem garantir que todas as estão contidas nos nós.
 
+![nack](https://github.com/absilva21/pbl-rede-3/assets/83670712/62e294fd-8a1c-42fc-a130-8ca76474a8ad)
+
+
 # Protocolo de comunicação entre os nós
 
-Os nós se comunicam com trocas de JSON
+Os nós se comunicam com trocas de JSON usando socket multicast na rede local.
+
+![multicast](https://github.com/absilva21/pbl-rede-3/assets/83670712/307a64c0-f3b9-4c09-b6c7-c0b512082b47)
+
 
 Existem dois tipos de comandos: **comando**, **mensagem**
 
@@ -49,5 +55,24 @@ Aqui está o layout de envio de mensagem
 ```
 zaps.py send [nome do usuário] [mensagem]
 ```
-**OBS**: sem []
+**OBS**: sem [ ]
+
 ### Visualizar caixa de mensagens
+
+```
+zaps.py input
+```
+
+## Referêncial teórico
+Foram utilizados slides do professor Lau Cheuk Lung ex docente da Universidade Federal de Santa Catarina, as imagens presentes nesse relatório também pertencem ao mesmo.
+
+[Comunicação de Grupo: Disfusão Confiável e Atômica ](https://www.inf.ufsc.br/~frank.siqueira/INE5418/Lau/1s-%20ComGrupo.pdf)
+
+## Ferramentas
+
+* Kit de desenvolvimento Java JDK 17.0.8.7-hotspost
+* Python 3
+* Visual studio Code
+* Eclipse ide 2021-09
+* Docker
+
