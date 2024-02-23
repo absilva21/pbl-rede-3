@@ -1,11 +1,10 @@
  # pbl-rede-3
  
   Aplicativo de troca de mensagens p2p versão 2, foi proposto o aprimoramento do código anterior para uma versão 
-com uma difusão atômica de mensagens e a criação de um serviço executando em imagem docker.
+com uma difusão atômica de mensagens e a criação de um serviço escrito em **Java** e executando em imagem docker.
   A estratégia de envio das mensagens é a difusão por muticast e a atomicidade pôde parcialmente ser garantida através 
 da implementação de um algoritmo com **Nack**, onde os nós ao perceberem falta de uma sequência de mensagens propagam a todos os nós 
-o pedido de retransmissão, somente um dos nós responde o pedido.
-  O projeto só foi implementado até esse processo, portanto os nós exibem mensagens mesmo sem garantir que  todas as mensagens estão em todos os nós.
+o pedido de retransmissão, somente um dos nós responde o pedido. O projeto só foi implementado até esse processo, portanto os nós exibem as mensagens mesmo sem garantir que todas as estão contidas nos nós.
 
 # Protocolo de comunicação entre os nós
 
@@ -40,4 +39,8 @@ Aqui está o layout de envio de mensagem
 {"idm":id da menssagem,"nomeOrigem":nome do usuário,"grupo":nome do grupo","origem":ip de origem,"tempo":[relogio lógico],"id":id do nó,"type":"men","body":corpo da mensagem}
 ````
 
+# Detalhes sobre o serviço
+ O serviço executa em uma container **Docker**, além de ser o servidor que processa o funcionamento da solução descentralizada, ele serve como uma caixa de mensagens. Para acessa-lo foi criado um script em **Python** que pode enviar mensagens para o servidor via loopback da máquina e também visualizar a caixa de mensagens da mesma forma. 
+
+ 
 
