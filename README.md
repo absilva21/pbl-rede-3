@@ -27,10 +27,15 @@ Quando um nó percebi a falta de alguma mensagem ele solicita aos nós as mensag
   Existe uma fila de solicitações de retransmissão, em um tempo aleatório cada nó tenta responder a solicitação mais antiga ou seja primeira da fila, 
   entre esse momento outro nó já pode ter respondido a mensagem, por isso quando uma resposta é propagada os outros nós devem marcar o objeto da solicitação Nack
   como respondida em um atributo booleano, por isso ao ler uma solicitação para responder o nó deve observar se esse atributo é **false** ou **true**
-  se for falso responde se for verdadeiro não responde
+  se for falso responde se for verdadeiro não responde.
 
+```
+  {"comNumber":número do camando=3,"origem":ip do nó solicitante,"type":tipo de mensagem="com","nackId":id do nack daquele nó,"nodeID":id do nó solicitante,"mens":[vetor com mensagens perdidas]}
+```
 
 ### Mensagem
+Aqui está o layout de envio de mensagem
+
 ```
 {"idm":id da menssagem,"nomeOrigem":nome do usuário,"grupo":nome do grupo","origem":ip de origem,"tempo":[relogio lógico],"id":id do nó,"type":"men","body":corpo da mensagem}
 ````
