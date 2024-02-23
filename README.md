@@ -62,6 +62,11 @@ Essa thread analisa uma **fila** de solicitações **nacks** acada intervalo ale
 
 A comunicação entre o serviço e o script em **Python** é feita através de uma thread que é iniciada ao executar o serviço.
 
+### Detecção de falta de mensagens
+
+A detecção é feita por uma thread que analisa as mensagens e busca encontrar falta em uma sequência de mensagens. Ao perceber isso ela envia a solicitação de 
+retransmissão.
+
 
 ## Comandos para o script
 
