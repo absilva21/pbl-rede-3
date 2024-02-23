@@ -52,12 +52,15 @@ Aqui está o layout de envio de mensagem
 Foi necessário o uso de algumas threads que fazem papeis importantes para o funcionamento do sistema
 
 ### Difusão de mensagens
+
 Existe uma thread responsável pela difusão em multicast das mensagens e também pelo recebimento essa thread é iniciada ao se instânciar um objeto da classe grupo.
 
 ### Resposta de solicitações de retransmissão
 Essa thread analisa uma **fila** de solicitações **nacks** acada intervalo aleatório de tempo e busca respoder a primeira solicitação da fila caso ela não tenha sido respondida.
 
+### Comunicação entre o servido e o script de envio e recebimento
 
+A comunicação entre o serviço e o script em **Python** é feita através de uma thread que é iniciada ao executar o serviço.
 
 
 ## Comandos para o script
